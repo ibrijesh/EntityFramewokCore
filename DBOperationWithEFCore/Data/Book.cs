@@ -12,4 +12,6 @@ public class Book
     
     public bool IsActive { get; set; }
     
+    public DateTime CreatedOn { get; set; }
+    
 }
