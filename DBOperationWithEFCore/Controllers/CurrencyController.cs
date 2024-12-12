@@ -45,14 +45,14 @@ namespace DBOperationWithEFCore.Controllers
         [HttpPost("all")]
         public async Task<IActionResult> GetCurrenciesByIdsAsync([FromBody] List<int> ids)
         {
-            var result = await _appDbContext.Currencies
-                .Where(x => ids.Contains(x.Id))
-                .Select(x => new 
-                {
-                    Id = x.Id,
-                    Title = x.Title
-                })
-                .ToListAsync();
+            var result = await (from Currencies in _appDbContext.Currencies
+                    where ids.Contains(Currencies.Id)
+                    select new
+                    {
+                        Id = Currencies.Id,
+                        Title = Currencies.Title,
+                    }
+                ).ToListAsync();
             return Ok(result);
         }
     }
