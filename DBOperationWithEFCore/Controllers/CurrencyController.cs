@@ -1,5 +1,6 @@
 using DBOperationWithEFCore.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DBOperationWithEFCore.Controllers
 {
@@ -15,10 +16,9 @@ namespace DBOperationWithEFCore.Controllers
         }
 
         [HttpGet("")]
-        public IActionResult GetAllCurrencies()
+        public async Task<IActionResult> GetAllCurrencies()
         {
-            var result = (from currencies in _appDbContext.Currencies
-                select currencies).ToList();
+            var result = await _appDbContext.Currencies.ToListAsync();
             return Ok(result);
         }
     }

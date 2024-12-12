@@ -1,5 +1,6 @@
 using DBOperationWithEFCore.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DBOperationWithEFCore.Controllers
 {
@@ -15,10 +16,9 @@ namespace DBOperationWithEFCore.Controllers
         }
 
         [HttpGet("")]
-        public IActionResult GetAllLanguages()
+        public async Task<IActionResult> GetAllLanguages()
         {
-            var result = (from languages in _appDbContext.Languages
-                select languages).ToList();
+            var result = await _appDbContext.Languages.ToListAsync();
             return Ok(result);
         }
     }
