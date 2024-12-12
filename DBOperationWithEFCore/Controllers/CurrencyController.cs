@@ -47,7 +47,7 @@ namespace DBOperationWithEFCore.Controllers
         {
             var result = await _appDbContext.Currencies
                 .Where(x => ids.Contains(x.Id))
-                .Select(x => new Currency()
+                .Select(x => new 
                 {
                     Id = x.Id,
                     Title = x.Title
