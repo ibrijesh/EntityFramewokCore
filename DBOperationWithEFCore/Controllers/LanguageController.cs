@@ -16,7 +16,7 @@ namespace DBOperationWithEFCore.Controllers
         }
 
         [HttpGet("")]
-        public async Task<IActionResult> GetAllLanguages()
+        public async Task<IActionResult> GetAllLanguagesAsync()
         {
             var result = await _appDbContext.Languages.ToListAsync();
             return Ok(result);
