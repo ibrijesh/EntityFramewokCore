@@ -22,10 +22,18 @@ namespace DBOperationWithEFCore.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> FindCurrencyByIdAsync([FromRoute] int id)
         {
             var result = await _appDbContext.Currencies.FindAsync(id);
+            return Ok(result);
+        }
+
+
+        [HttpGet("{name}")]
+        public async Task<IActionResult> FindCurrencyByNameAsync([FromRoute] string name)
+        {
+            var result = await _appDbContext.Currencies.Where(x => x.Title == name).FirstAsync();
             return Ok(result);
         }
     }
