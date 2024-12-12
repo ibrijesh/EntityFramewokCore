@@ -31,9 +31,14 @@ namespace DBOperationWithEFCore.Controllers
 
 
         [HttpGet("{name}")]
-        public async Task<IActionResult> FindCurrencyByNameAsync([FromRoute] string name)
+        public async Task<IActionResult> FindCurrencyByNameAsync([FromRoute] string name,
+            [FromQuery] string? description)
         {
-            var result = await _appDbContext.Currencies.Where(x => x.Title == name).SingleOrDefaultAsync();
+            var result =
+                await _appDbContext.Currencies
+                    .FirstOrDefaultAsync(x => x.Title == name
+                                              && (string.IsNullOrEmpty(description)
+                                                  || x.Description == description));
             return Ok(result);
         }
     }
