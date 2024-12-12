@@ -1,5 +1,4 @@
 using DBOperationWithEFCore.Data;
-
 using Microsoft.AspNetCore.Mvc;
 
 namespace DBOperationWithEFCore.Controllers
@@ -9,7 +8,7 @@ namespace DBOperationWithEFCore.Controllers
     public class LanguageController : ControllerBase
     {
         private readonly AppDbContext _appDbContext;
-        
+
         public LanguageController(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
@@ -18,9 +17,9 @@ namespace DBOperationWithEFCore.Controllers
         [HttpGet("")]
         public IActionResult GetAllLanguages()
         {
-            var result = _appDbContext.Languages.ToList();
+            var result = (from languages in _appDbContext.Languages
+                select languages).ToList();
             return Ok(result);
         }
-        
     }
 }

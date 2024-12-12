@@ -17,7 +17,8 @@ namespace DBOperationWithEFCore.Controllers
         [HttpGet("")]
         public IActionResult GetAllCurrencies()
         {
-            var result = _appDbContext.Currencies.ToList();
+            var result = (from currencies in _appDbContext.Currencies
+                select currencies).ToList();
             return Ok(result);
         }
     }
