@@ -33,7 +33,7 @@ namespace DBOperationWithEFCore.Controllers
         [HttpGet("{name}")]
         public async Task<IActionResult> FindCurrencyByNameAsync([FromRoute] string name)
         {
-            var result = await _appDbContext.Currencies.Where(x => x.Title == name).FirstAsync();
+            var result = await _appDbContext.Currencies.Where(x => x.Title == name).FirstOrDefaultAsync();
             return Ok(result);
         }
     }
