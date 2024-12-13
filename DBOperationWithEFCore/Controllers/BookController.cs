@@ -15,5 +15,13 @@ namespace DBOperationWithEFCore.Controllers
             await _appDbContext.SaveChangesAsync();
             return Ok(model);
         }
+
+        [HttpPost("bulk")]
+        public async Task<IActionResult> AddBookInBulkAsync([FromBody] List<Book> model)
+        {
+            _appDbContext.Books.AddRange(model);
+            await _appDbContext.SaveChangesAsync();
+            return Ok(model);
+        }
     }
 }
