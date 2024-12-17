@@ -30,4 +30,6 @@ public class AppDbContext : DbContext
     public DbSet<Language> Languages { get; set; }
     public DbSet<BookPrice> BookPrices { get; set; }
     public DbSet<Currency> Currencies { get; set; }
+    
+    public DbSet<Author> Authors { get; set; }
 }
