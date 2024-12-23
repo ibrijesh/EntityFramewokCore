@@ -25,12 +25,16 @@ namespace DBOperationWithEFCore.Controllers
             return Ok(model);
         }
 
-        [HttpPut("")]
-        public async Task<IActionResult> UpdateBookAsync([FromBody] Book model)
+        [HttpPut("bulk")]
+        public async Task<IActionResult> UpdateBookInBulkAsync()
         {
-            _appDbContext.Books.Update(model);
-            await _appDbContext.SaveChangesAsync();
-            return Ok(model);
+            await _appDbContext.Books
+                .Where(x => x.NoOfPages > 200)
+                .ExecuteUpdateAsync(x => x
+                    .SetProperty(p => p.Description, p => p.Title + "This is book description")
+                    .SetProperty(p => p.Title, p => p.Title + " updated")
+                );
+            return Ok();
         }
     }
 }
