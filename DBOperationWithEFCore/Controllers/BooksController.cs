@@ -70,5 +70,14 @@ namespace DBOperationWithEFCore.Controllers
 
             return Ok(model);
         }
+        
+        [HttpPost("author")]
+        public async Task<IActionResult> AddBookWithAuthorAsync([FromBody] Book model)
+        {
+            appDbContext.Books.Add(model);
+            await appDbContext.SaveChangesAsync(); // it makes single sql call here only.
+
+            return Ok(model);
+        }
     }
 }
