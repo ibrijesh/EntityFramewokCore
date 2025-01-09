@@ -139,13 +139,7 @@ namespace DBOperationWithEFCore.Controllers
         [HttpDelete("bulk")]
         public async Task<IActionResult> DeleteBooksInbulkAsync()
         {
-            for (int id = 9; id <= 11; ++id)
-            {
-                var book = new Book { Id = id };
-                appDbContext.Entry(book).State = EntityState.Deleted;
-            }
-
-            await appDbContext.SaveChangesAsync();
+            await appDbContext.Books.Where(x => x.Id > 15 && x.Id < 17).ExecuteDeleteAsync();
             return Ok();
         }
     }
