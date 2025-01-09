@@ -135,5 +135,15 @@ namespace DBOperationWithEFCore.Controllers
 
             return Ok();
         }
+
+        [HttpDelete("bulk")]
+        public async Task<IActionResult> DeleteBooksInbulkAsync()
+        {
+            var books = await appDbContext.Books.Where(x => x.Id < 5).ToListAsync();
+            appDbContext.Books.RemoveRange(books);
+
+            await appDbContext.SaveChangesAsync();
+            return Ok();
+        }
     }
 }
