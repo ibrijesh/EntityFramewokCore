@@ -116,5 +116,20 @@ namespace DBOperationWithEFCore.Controllers
                 .SetProperty(p => p.Description, p => p.Description + " This is  updated description"));
             return Ok();
         }
+
+        [HttpDelete("{bookId}")]
+        public async Task<IActionResult> DeleteBookAsync([FromRoute] int bookId)
+        {
+            var book = await appDbContext.Books.FindAsync(bookId);
+            if (book == null)   
+            {
+                return NotFound();
+            }
+
+            appDbContext.Remove(book);
+            await appDbContext.SaveChangesAsync();
+
+            return Ok();
+        }
     }
 }
