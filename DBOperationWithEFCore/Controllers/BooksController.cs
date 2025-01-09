@@ -70,7 +70,7 @@ namespace DBOperationWithEFCore.Controllers
 
             return Ok(model);
         }
-        
+
         [HttpPost("author")]
         public async Task<IActionResult> AddBookWithAuthorAsync([FromBody] Book model)
         {
@@ -78,6 +78,25 @@ namespace DBOperationWithEFCore.Controllers
             await appDbContext.SaveChangesAsync(); // it makes single sql call here only.
 
             return Ok(model);
+        }
+
+        [HttpPut("{bookId}")]
+        public async Task<IActionResult> UpdateBookAsync([FromRoute] int bookId, [FromBody] Book model)
+        {
+            var book = appDbContext.Books.FirstOrDefault(x => x.Id == bookId);
+
+            if (book == null)
+            {
+                return NotFound();
+            }
+
+            book.Title = model.Title;
+            book.Description = model.Description;
+            book.NoOfPages = model.NoOfPages;
+
+            await appDbContext.SaveChangesAsync();
+
+            return Ok(book);
         }
     }
 }
