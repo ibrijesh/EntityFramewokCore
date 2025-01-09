@@ -98,5 +98,14 @@ namespace DBOperationWithEFCore.Controllers
 
             return Ok(book);
         }
+
+        [HttpPut("")]
+        public async Task<IActionResult> UpdateBookInSingleQueryAsync([FromBody] Book model)
+        {
+            appDbContext.Books.Update(model);
+            await appDbContext.SaveChangesAsync();
+
+            return Ok(model);
+        }
     }
 }
