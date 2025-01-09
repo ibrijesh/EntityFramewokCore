@@ -54,5 +54,21 @@ namespace DBOperationWithEFCore.Controllers
 
             return Ok(books);
         }
+
+        [HttpPost("related")]
+        public async Task<IActionResult> AddBooksRelatedAsync([FromBody] Book model)
+        {
+            var author = new Author()
+            {
+                Name = "Author 1",
+                Email = "author1@email.com"
+            };
+
+            model.Author = author;
+            appDbContext.Books.Add(model);
+            await appDbContext.SaveChangesAsync();
+
+            return Ok(model);
+        }
     }
 }
