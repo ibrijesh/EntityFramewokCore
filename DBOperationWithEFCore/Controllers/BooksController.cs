@@ -9,10 +9,10 @@ namespace DBOperationWithEFCore.Controllers
     [ApiController]
     public class BooksController(AppDbContext appDbContext) : ControllerBase
     {
-        [HttpGet("")]
-        public async Task<IActionResult> GetBookByIdAsync([FromQuery] int id)
+        [HttpGet("{bookId}")]
+        public async Task<IActionResult> GetBookByIdAsync([FromRoute] int bookId)
         {
-            var book = await appDbContext.Books.FindAsync(id);
+            var book = await appDbContext.Books.FindAsync(bookId);
 
             if (book == null)
             {
