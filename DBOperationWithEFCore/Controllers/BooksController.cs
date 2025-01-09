@@ -39,5 +39,20 @@ namespace DBOperationWithEFCore.Controllers
 
             return Ok(models);
         }
+
+        [HttpPost("bulkNotOptimized")]
+        public async Task<IActionResult> AddBooksAsyncNotOptimized([FromBody] List<Book> models)
+        {
+            var books = new List<Book>();
+
+            foreach (var model in models)
+            {
+                appDbContext.Books.Add(model);
+                await appDbContext.SaveChangesAsync();
+                books.Add(model);
+            }
+
+            return Ok(books);
+        }
     }
 }
