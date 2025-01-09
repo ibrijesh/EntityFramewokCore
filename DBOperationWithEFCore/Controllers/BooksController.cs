@@ -9,6 +9,14 @@ namespace DBOperationWithEFCore.Controllers
     [ApiController]
     public class BooksController(AppDbContext appDbContext) : ControllerBase
     {
+        [HttpGet("")]
+        public async Task<IActionResult> GetBooks()
+        {
+            var result = await (from currencies in appDbContext.Currencies
+                select currencies).AsNoTracking().ToListAsync();
+            return Ok(result);
+        }
+
         [HttpGet("{bookId}")]
         public async Task<IActionResult> GetBookByIdAsync([FromRoute] int bookId)
         {
