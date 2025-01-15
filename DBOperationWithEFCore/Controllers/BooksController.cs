@@ -9,6 +9,19 @@ namespace DBOperationWithEFCore.Controllers
     [ApiController]
     public class BooksController(AppDbContext appDbContext) : ControllerBase
     {
+        [HttpGet("navigationalProperties")]
+        public async Task<IActionResult> GetNavigationalProperties()
+        {
+            var result = appDbContext.Books.Select(x => new
+            {
+                Id = x.Id,
+                Title = x.Title,
+                Author = x.Author != null ? x.Author.Name : "NA",
+                Language = x.Language
+            });
+            return Ok(result);
+        }
+
         [HttpGet("")]
         public async Task<IActionResult> GetBooks()
         {
